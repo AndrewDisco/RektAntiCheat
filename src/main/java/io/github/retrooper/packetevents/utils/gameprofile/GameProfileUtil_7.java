@@ -24,7 +24,7 @@
 
 package io.github.retrooper.packetevents.utils.gameprofile;
 
-import net.minecraft.util.com.mojang.authlib.GameProfile;
+import com.mojang.authlib.GameProfile;
 
 import java.util.UUID;
 

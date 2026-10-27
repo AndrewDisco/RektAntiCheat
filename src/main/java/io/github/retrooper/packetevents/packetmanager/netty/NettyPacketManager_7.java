@@ -26,11 +26,11 @@ package io.github.retrooper.packetevents.packetmanager.netty;
 
 import io.github.retrooper.packetevents.PacketEvents;
 import io.github.retrooper.packetevents.utils.nms.NMSUtils;
-import net.minecraft.util.io.netty.channel.Channel;
-import net.minecraft.util.io.netty.channel.ChannelDuplexHandler;
-import net.minecraft.util.io.netty.channel.ChannelHandlerContext;
-import net.minecraft.util.io.netty.channel.ChannelPipeline;
-import net.minecraft.util.io.netty.channel.ChannelPromise;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelDuplexHandler;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelPipeline;
+import io.netty.channel.ChannelPromise;
 import org.bukkit.entity.Player;
 
 final class NettyPacketManager_7 {

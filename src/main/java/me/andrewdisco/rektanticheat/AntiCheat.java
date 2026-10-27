@@ -83,7 +83,6 @@ import me.andrewdisco.rektanticheat.data.DataManager;
 import me.andrewdisco.rektanticheat.other.GUI;
 import me.andrewdisco.rektanticheat.other.LagCore;
 import me.andrewdisco.rektanticheat.other.Latency;
-import net.minecraft.server.v1_8_R3.NetworkManager;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -191,6 +190,10 @@ public class AntiCheat extends JavaPlugin implements Listener {
 
 	@Override
 	public void onEnable() {
+		// PacketEvents must be created before it is loaded, and `plugin` must be set first
+		Instance = this;
+		plugin = this;
+		setupPacketEvents();
 		runPacketEvents();
 		playerInformationMain.startDefaults();
 		service = Executors.newSingleThreadExecutor();
@@ -681,8 +684,7 @@ public class AntiCheat extends JavaPlugin implements Listener {
 	}
 
 	private void setupPacketEvents() {
-		PacketEvents.create(plugin).getSettings()
-				.compatInjector(false)
+		PacketEvents.create().getSettings()
 				.checkForUpdates(false)
 				.backupServerVersion(ServerVersion.v_1_7_10);
 

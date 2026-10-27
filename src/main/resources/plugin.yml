@@ -1,6 +1,6 @@
 name: RektAntiCheat
 version: 1.0.0
-main: me.andreigamerytb.rektanticheat.AntiCheat
+main: me.andrewdisco.rektanticheat.AntiCheat
 authors: [ AndreiGamerYTB ]
 description: The anti cheat you always needed.
 depend: [ProtocolLib]

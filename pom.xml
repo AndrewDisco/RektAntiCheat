@@ -30,6 +30,21 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <!-- Compile-only stubs for optional/legacy APIs (ViaVersion, ProtocolSupport, SpigotConfig, 1.7 NMS); the real classes come from the server at runtime -->
+                    <excludes>
+                        <exclude>org/spigotmc/**</exclude>
+                        <exclude>protocolsupport/**</exclude>
+                        <exclude>us/myles/**</exclude>
+                        <exclude>net/minecraft/server/v1_7_R4/**</exclude>
+                        <exclude>org/bukkit/craftbukkit/v1_7_R4/**</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>3.2.4</version>
                 <executions>
@@ -62,13 +77,60 @@
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
+        <!-- ProtocolLib and Mojang authlib -->
+        <repository>
+            <id>dmulloy2-repo</id>
+            <url>https://repo.dmulloy2.net/repository/public/</url>
+        </repository>
+        <repository>
+            <id>minecraft-libraries</id>
+            <url>https://libraries.minecraft.net/</url>
+        </repository>
     </repositories>
 
     <dependencies>
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.16.4-R0.1-SNAPSHOT</version>
+            <version>1.8.8-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+            <!-- bungeecord-chat 1.8-SNAPSHOT is no longer hosted anywhere -->
+            <exclusions>
+                <exclusion>
+                    <groupId>net.md-5</groupId>
+                    <artifactId>bungeecord-chat</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>net.md-5</groupId>
+            <artifactId>bungeecord-chat</artifactId>
+            <version>1.16-R0.4</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- Used by the code but previously undeclared -->
+        <dependency>
+            <groupId>com.comphenix.protocol</groupId>
+            <artifactId>ProtocolLib</artifactId>
+            <version>4.8.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+            <version>4.1.50.Final</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.mojang</groupId>
+            <artifactId>authlib</artifactId>
+            <version>1.5.25</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1.1</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

@@ -24,8 +24,8 @@
 
 package io.github.retrooper.packetevents.utils.bytebuf;
 
-import net.minecraft.util.io.netty.buffer.ByteBuf;
-import net.minecraft.util.io.netty.buffer.Unpooled;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 class ByteBufUtil_7 {
     public static Object copiedBuffer(byte[] bytes) {
