@@ -28,6 +28,7 @@ import io.github.retrooper.packetevents.utils.server.ServerVersion;
 import me.andrewdisco.rektanticheat.checks.combat.aimassist.AimAssistA;
 import me.andrewdisco.rektanticheat.checks.combat.aimassist.AimAssistB;
 import me.andrewdisco.rektanticheat.checks.combat.aimassist.AimAssistC;
+import me.andrewdisco.rektanticheat.checks.combat.aimassist.AimAssistD;
 import me.andrewdisco.rektanticheat.checks.combat.antikb.AntiKBA;
 import me.andrewdisco.rektanticheat.checks.combat.antikb.AntiKBB;
 import me.andrewdisco.rektanticheat.checks.combat.antikb.AntiKBC;
@@ -336,6 +337,7 @@ public class AntiCheat extends JavaPlugin implements Listener {
 		this.Checks.add(new ChatA(this));
 		this.Checks.add(new PhaseB(this));
 		this.Checks.add(new AimAssistA(this));
+		this.Checks.add(new AimAssistD(this));
 		this.Checks.add(new SpeedD(this));
 		this.Checks.add(new AimAssistB(this));
 		this.Checks.add(new AntiKBA(this));
