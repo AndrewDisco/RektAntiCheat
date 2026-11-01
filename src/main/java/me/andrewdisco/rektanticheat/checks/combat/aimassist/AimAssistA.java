@@ -7,9 +7,15 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 public class AimAssistA extends Check {
-	private int aimAssist = 0;
+	// one counter per player: this check is a single instance shared by the whole server
+	private final Map<UUID, Integer> aimAssist = new HashMap<UUID, Integer>();
 
 	public AimAssistA(me.andrewdisco.rektanticheat.AntiCheat AntiCheat) {
 		super("AimAssistA", "AimAssist",  CheckType.Combat, true, false, false, false, true, 20, 1, 600000L, AntiCheat);
@@ -19,15 +25,18 @@ public class AimAssistA extends Check {
 		return d % 1.0;
 	}
 
-	private void setAimAssest(int n) {
-		this.aimAssist = n;
-		if (this.aimAssist < 0) {
-			this.aimAssist = 0;
-		}
+	private void setAimAssest(UUID id, int n) {
+		this.aimAssist.put(id, Math.max(n, 0));
 	}
 
-	private int getAimAssist() {
-		return this.aimAssist;
+	private int getAimAssist(UUID id) {
+		final Integer n = this.aimAssist.get(id);
+		return n == null ? 0 : n;
+	}
+
+	@EventHandler
+	private void onQuit(PlayerQuitEvent e) {
+		this.aimAssist.remove(e.getPlayer().getUniqueId());
 	}
 
 	@EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
@@ -38,21 +47,22 @@ public class AimAssistA extends Check {
 		if (p == null) {
 			return;
 		}
+		final UUID id = p.getUniqueId();
 		final double d = Math.abs(location.getYaw() - location2.getYaw());
 		if (d > 0.0 && d < 360.0) {
 			if (AimAssistA.getFrac(d) == 0.0) {
-				this.setAimAssest(this.getAimAssist() + 100);
-				if (this.getAimAssist() > 2000) {
+				this.setAimAssest(id, this.getAimAssist(id) + 100);
+				if (this.getAimAssist(id) > 2000) {
 
 					if (getAntiCheat().getLag().getTPS() < getAntiCheat().getTPSCancel()
 							|| getAntiCheat().getLag().getPing(p) > getAntiCheat().getPingCancel()) {
 						return;
 					}
 					getAntiCheat().logCheat(this, p, "(Aimbot)", "(Type: A)");
-					this.setAimAssest(0);
+					this.setAimAssest(id, 0);
 				}
 			} else {
-				this.setAimAssest(this.getAimAssist() - 21);
+				this.setAimAssest(id, this.getAimAssist(id) - 21);
 			}
 		}
 	}
